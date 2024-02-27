@@ -2,26 +2,351 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+
+.MainContainer {
+  display: flex;
+  align-items: center;
+  /* flex-direction: column; */
+  width: 100vw;
+  min-height: 100vh;
+  overflow-y: scroll;
+}
+
+.leftpanel {
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 14rem;
+  height: 100vh;
+  background-color: #1E2640;
+  color: white;
+  position: sticky;
+  top: 0;
+  right: 0;
+  padding: 1rem 0.625rem 1rem 0.625rem;
+  /* padding: 1rem; */
+}
+
+.leftpanel.active {
+  transition: 0.3s ease-in-out;
+  display: flex;
+  animation-duration: 0.3s;
+  transition-duration: .3s;
+  /* z-index: 1; */
+  /* visibility:visible;
+  opacity: 1;
+  width: 14rem; */
+}
+
+.main {
+  width: 100%;
+  height: 100vh;
+  /* flex: 1; */
+  /* width: 100%; prev we were gibing this */
+  /* width: calc(100% - 14rem); */
+}
+
+.mainNavCOntainer {
+  width: 208px;
+  height: 780px;
+  gap: 24px;
+
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+.headerImg {
+  width: 39px;
+  height: 39px;
+  border-radius: 4px;
+}
+
+
+.chevrownimg {
+  width: 20px;
+  height: 20px;
+}
+
+.visitStore {
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.aside {
+  width: 108px;
+  height: 42px;
+  gap: 4px;
+}
+
+.navLinks {
+  gap: 4px;
+  margin-top: 1.5rem;
+}
+
+.NavItems {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  gap: 12px;
+  border-radius: 4px;
+  width: 208px;
+  height: 36px;
+
+}
+
+.NavItems:hover {
+  background-color: rgb(255 255 255 / 0.1);
+}
+
+.item {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.25rem;
+}
+
+.homeImg {
+  width: 20px;
+  height: 20px;
+}
+
+.footer {
+  width: 192px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  padding: 0.375rem 0.75rem 0.375rem 0.75rem;
+  background-color: rgb(255 255 255 / 0.1);
+}
+
+.Nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 32px 12px 32px;
+  gap: 16px;
+}
+
+.section1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.section3 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.inputbox {
+  padding: 9px 16px 9px 16px;
+  gap: 8px;
+  border-radius: 6px;
+  width: 400px;
+  height: 40px;
+  background-color: #F2F2F2;
+
+}
+
+.payouts {
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+.mainContent {
+  padding: 2rem;
+}
+
+.overview {
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.selectoption {
+  padding: 0.5rem;
+
+}
+
+.selectcontainer {
+  background-color: #F2F2F2;
+  border: 1px solid grey;
+  border-radius: 4px;
+}
+
+.card1 {
+  flex-grow: 1;
+  padding: 1.25rem;
+  min-width: 370px;
+  height: 154px;
+  border-radius: 0.5rem;
+}
+
+.card2 {
+  flex-grow: 1;
+  border: 1px solid black;
+  padding: 1.25rem;
+  min-width: 370px;
+  height: 118px;
+  background-color: rgb(255 255 255);
+  box-shadow: rgba(26, 24, 30, 0.04) 0px 2px 6px 0px;
+  border-radius: 0.5rem;
+}
+
+.card3 {
+  flex-grow: 1;
+  border: 1px solid black;
+  padding: 1.25rem;
+  min-width: 370px;
+  height: 118px;
+  background-color: rgb(255 255 255);
+  box-shadow: rgba(26, 24, 30, 0.04) 0px 2px 6px 0px;
+  border-radius: 0.5rem;
+}
+
+.bg {
+  background-color: rgb(14 79 130);
+}
+
+.bg2 {
+  background-color: rgb(20 110 180);
+}
+
+
+.Transactions {
+  margin-top: 1.2rem;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.bgpayout {
+  background-color: rgb(128 128 128);
+}
+
+.hamburgerIcon {
+  display: none;
+}
+
+.cardContainer {
+  display: flex;
+  /* align-items: center;
+  justify-content: space-between; */
+  gap: 1.25rem;
+  flex-wrap: wrap;
+
+}
+
+.closeIcon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+/* If the browser window is 1024px or smaller, apply this: */
+@media only screen and (max-width: 1024px) {
+
+  .leftpanel {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  .hamburgerIcon {
+    display: flex;
+    top: 15px;
+  }
+
+  .rightPanel {
+    width: 100%;
+  }
+
+  /* when it is less thna 1024 right panel wirll take all widht as now navbar is not there */
+
 }
