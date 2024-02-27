@@ -10,6 +10,6 @@ export async function GET(request) {
 
     } catch (error) {
         console.log("some error occured", error)
-        return NextResponse.json({ message: "some error occured", response: false })
+        return NextResponse.json({ message: error, response: false })
     }
 }
