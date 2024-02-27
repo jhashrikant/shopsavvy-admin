@@ -10,8 +10,6 @@ import { useRouter } from 'next/navigation';
 import { sizes } from '@/utils';
 
 
-// export const revalidate = 0;
-export const revalidate = 0 // revalidate at most every hour
 
 const Addproductclient = ({ Categories }) => {
 
@@ -70,12 +68,13 @@ const Addproductclient = ({ Categories }) => {
         event.preventDefault();
         if (!Isediting) {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/addproduct`, { cache: 'no-store' },{
+                const res = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/addproduct`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify(formdata),
+                    cache: 'no-store'
                 });
                 console.log(res);
                 if (!res.ok) {
@@ -86,7 +85,9 @@ const Addproductclient = ({ Categories }) => {
                 console.log(data);
                 if (data.response) {
                     toast.success(data.message)
-                    const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`,{ cache: 'no-store' })
+                    const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`,{
+                        cache: 'no-store'
+                    })
                     const JSondata = await updateddata.json();
                     if (JSondata.response) setProducts(JSondata?.products);
                     router.push('/Products')
@@ -110,12 +111,13 @@ const Addproductclient = ({ Categories }) => {
         }
         else {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/updateProduct`, { cache: 'no-store' },{
+                const res = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/updateProduct`, {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({ id: productid, formdata: formdata }),
+                    cache: 'no-store'
                 });
                 console.log(res);
                 if (!res.ok) {
@@ -126,7 +128,9 @@ const Addproductclient = ({ Categories }) => {
                 console.log(data);
                 if (data.response) {
                     toast.success(data.message)
-                    const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`,{ cache: 'no-store' })
+                    const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`,{
+                        cache: 'no-store'
+                    })
                     const JSondata = await updateddata.json();
                     if (JSondata.response) setProducts(JSondata?.products);
                     router.push('/Products')

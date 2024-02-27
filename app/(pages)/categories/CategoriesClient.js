@@ -58,12 +58,13 @@ const CategoriesClient = ({ Categories }) => {
 	const handleaddNewCategory = async () => {
 		if (isUpdating) {
 			try {
-				const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/updateNavItem`, { cache: 'no-store' }, {
+				const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/updateNavItem`, {
 					method: "PATCH",
 					headers: {
 						"Content-Type": "application/json",
 					},
 					body: JSON.stringify({ id: Navitemid, labelname: labelname }),
+					cache: 'no-store'
 				});
 				// console.log(res);
 				if (!response.ok) {
@@ -74,7 +75,9 @@ const CategoriesClient = ({ Categories }) => {
 				console.log(data);
 				if (data.response) {
 					toast.success(data.message)
-					const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, { cache: 'no-store' })
+					const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, {
+						cache: 'no-store'
+					})
 					const JSondata = await updateddata.json()
 					if (JSondata.response) setCategories(JSondata.navItems);
 				} else {
@@ -91,12 +94,13 @@ const CategoriesClient = ({ Categories }) => {
 		}
 		else {
 			try {
-				const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/addNavItems`,{ cache: 'no-store' }, {
+				const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/addNavItems`, {
 					method: "POST", // or 'PUT'
 					headers: {
 						"Content-Type": "application/json",
 					},
 					body: JSON.stringify({ labelname: labelname }),
+					cache: 'no-store'
 				});
 				if (!response.ok) {
 					toast.error("some issue occurred we didn't get response from server")
@@ -109,7 +113,9 @@ const CategoriesClient = ({ Categories }) => {
 				}
 				else {
 					toast.success(data.message)
-					const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`,{ cache: 'no-store' })
+					const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, {
+						cache: 'no-store'
+					})
 					const JSondata = await updateddata.json()
 					if (JSondata.response) setCategories(JSondata.navItems);
 				}
@@ -143,12 +149,13 @@ const CategoriesClient = ({ Categories }) => {
 	const handleDelete = async (id) => {
 		console.log(id)
 		try {
-			const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/deleteNavItem`, { cache: 'no-store' },{
+			const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/deleteNavItem`, {
 				method: "DELETE", // or 'PUT'
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({ id: id }),
+				cache: 'no-store'
 			});
 			console.log(response)
 			if (!response.ok) {
@@ -159,7 +166,9 @@ const CategoriesClient = ({ Categories }) => {
 			console.log(data);
 			if (data.response) {
 				toast.success(data.message)
-				const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`,{ cache: 'no-store' })
+				const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, {
+					cache: 'no-store'
+				})
 				const JSondata = await updateddata.json();
 				if (JSondata.response) setCategories(JSondata.navItems);
 			}

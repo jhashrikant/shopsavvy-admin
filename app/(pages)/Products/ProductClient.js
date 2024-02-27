@@ -42,7 +42,7 @@ const ProductClient = ({ products }) => {
     const router = useRouter()
 
     const context = useContext(ProductContext)
-    const { formdata, setformdata, setIsediting, setproductId ,Products, setProducts } = context
+    const { formdata, setformdata, setIsediting, setproductId, Products, setProducts } = context
     console.log(Products)
     console.log(formdata);
 
@@ -72,12 +72,13 @@ const ProductClient = ({ products }) => {
     const handleDelete = async (id) => {
         console.log(id)
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/deleteProduct`,{ cache: 'no-store' }, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/deleteProduct`, {
                 method: "DELETE", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ id: id }),
+                cache: 'no-store'
             });
             if (!response.ok) {
                 console.log('sdsds')
@@ -88,7 +89,9 @@ const ProductClient = ({ products }) => {
             console.log(data);
             if (data.response) {
                 toast.success(data.message)
-                const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`,{ cache: 'no-store' })
+                const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`, {
+                    cache: 'no-store'
+                })
                 const JSondata = await updateddata.json();
                 if (JSondata.response) setProducts(JSondata?.products);
             }
