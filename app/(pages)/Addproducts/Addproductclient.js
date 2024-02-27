@@ -7,13 +7,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { useContext } from 'react';
 import { ProductContext } from '@/app/context/ProductContext';
 import { useRouter } from 'next/navigation';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
 import { sizes } from '@/utils';
 
 

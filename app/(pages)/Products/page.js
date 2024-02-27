@@ -1,4 +1,3 @@
-import Addproduct from "../Addproducts/page";
 import ProductClient from "./ProductClient";
 
 const fetchAllproducts = async () => {

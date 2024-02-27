@@ -1,6 +1,5 @@
 //server component
 import CategoriesClient from "./CategoriesClient"
-// export const revalidate = 0;
 
 const fetchCategories = async () => {
 	try {

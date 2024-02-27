@@ -13,9 +13,7 @@ import {
 const OrdersClient = ({ Orders }) => {
     console.log('line 14', Orders)
 
-    // const pay = Orders?.map(data => data?.paymentStatus)
-    // console.log(Orders.map(data => data?.products?.map(item => item?.Product_name)))
-    // console.log('line 17', pay);
+
 
     return (
         <>

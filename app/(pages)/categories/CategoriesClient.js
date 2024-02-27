@@ -36,7 +36,6 @@ import {
 import { MoreHorizontal } from "lucide-react"
 import MyModal from "@/components/ui/headlessui/Dialog"
 
-// export const revalidate=0
 
 const CategoriesClient = ({ Categories }) => {
 
