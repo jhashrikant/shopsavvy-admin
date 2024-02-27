@@ -34,7 +34,7 @@ import { useContext, useState } from "react";
 import { ProductContext } from "@/app/context/ProductContext";
 import toast, { Toaster } from "react-hot-toast";
 
-export const revalidate = 0 
+
 const ProductClient = ({ products }) => {
 
     // const [Products, setProducts] = useState(products || [])
@@ -72,7 +72,7 @@ const ProductClient = ({ products }) => {
     const handleDelete = async (id) => {
         console.log(id)
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/deleteProduct`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/deleteProduct`,{ cache: 'no-store' }, {
                 method: "DELETE", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",
@@ -88,7 +88,7 @@ const ProductClient = ({ products }) => {
             console.log(data);
             if (data.response) {
                 toast.success(data.message)
-                const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`)
+                const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`,{ cache: 'no-store' })
                 const JSondata = await updateddata.json();
                 if (JSondata.response) setProducts(JSondata?.products);
             }

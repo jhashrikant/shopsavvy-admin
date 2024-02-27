@@ -70,7 +70,7 @@ const Addproductclient = ({ Categories }) => {
         event.preventDefault();
         if (!Isediting) {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/addproduct`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/addproduct`, { cache: 'no-store' },{
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -86,7 +86,7 @@ const Addproductclient = ({ Categories }) => {
                 console.log(data);
                 if (data.response) {
                     toast.success(data.message)
-                    const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`)
+                    const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`,{ cache: 'no-store' })
                     const JSondata = await updateddata.json();
                     if (JSondata.response) setProducts(JSondata?.products);
                     router.push('/Products')
@@ -110,7 +110,7 @@ const Addproductclient = ({ Categories }) => {
         }
         else {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/updateProduct`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/updateProduct`, { cache: 'no-store' },{
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
@@ -126,7 +126,7 @@ const Addproductclient = ({ Categories }) => {
                 console.log(data);
                 if (data.response) {
                     toast.success(data.message)
-                    const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`)
+                    const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`,{ cache: 'no-store' })
                     const JSondata = await updateddata.json();
                     if (JSondata.response) setProducts(JSondata?.products);
                     router.push('/Products')
