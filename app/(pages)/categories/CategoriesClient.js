@@ -36,7 +36,7 @@ import {
 import { MoreHorizontal } from "lucide-react"
 import MyModal from "@/components/ui/headlessui/Dialog"
 
-
+export const revalidate = 0 // revalidate at most every hour
 const CategoriesClient = ({ Categories }) => {
 
 	const [categories, setCategories] = useState(Categories || [])//local state to store the categories so that it renders wheh update or delete happens

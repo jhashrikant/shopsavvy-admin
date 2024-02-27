@@ -11,6 +11,7 @@ import { sizes } from '@/utils';
 
 
 // export const revalidate = 0;
+export const revalidate = 0 // revalidate at most every hour
 
 const Addproductclient = ({ Categories }) => {
 

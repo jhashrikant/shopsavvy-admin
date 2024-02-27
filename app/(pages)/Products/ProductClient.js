@@ -34,7 +34,7 @@ import { useContext, useState } from "react";
 import { ProductContext } from "@/app/context/ProductContext";
 import toast, { Toaster } from "react-hot-toast";
 
-
+export const revalidate = 0 
 const ProductClient = ({ products }) => {
 
     // const [Products, setProducts] = useState(products || [])
