@@ -49,13 +49,18 @@ const Addproductclient = ({ Categories }) => {
     console.log(formdata)
 
 
-    function handleformchange(event) {
+    const handleformchange = (event) => {
         setformdata((prevformdata) => {
             return {
                 ...prevformdata,
-                [event.target.name]: event.target.value
+                [event.target.name]: event?.target?.value.trim()
             }
         })
+    }
+
+    const handleCancel = (event) => {
+        event.preventDefault();
+        router.push('/Products')
     }
 
 
@@ -80,7 +85,7 @@ const Addproductclient = ({ Categories }) => {
                 console.log(data);
                 if (data.response) {
                     toast.success(data.message)
-                    const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`,{ next: { revalidate: 0 } })
+                    const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`, { next: { revalidate: 0 } })
                     const JSondata = await updateddata.json();
                     if (JSondata.response) setProducts(JSondata?.products);
                     router.push('/Products')
@@ -121,7 +126,7 @@ const Addproductclient = ({ Categories }) => {
                 console.log(data);
                 if (data.response) {
                     toast.success(data.message)
-                    const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`,{ next: { revalidate: 0 } })
+                    const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`, { next: { revalidate: 0 } })
                     const JSondata = await updateddata.json();
                     if (JSondata.response) setProducts(JSondata?.products);
                     router.push('/Products')
@@ -222,7 +227,7 @@ const Addproductclient = ({ Categories }) => {
                 </div>
 
                 <div className="!mb-6 flex items-center justify-end gap-x-6">
-                    <button type="submit" className="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
+                    <button onClick={handleCancel} className="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
                     {/* <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button> */}
                     <Button type="submit">Save</Button>
                 </div>
