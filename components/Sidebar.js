@@ -30,7 +30,7 @@ const Sidebar = ({ Isactive ,OpenAndCloseHamburger}) => {
                     {/* <Image className='headerImg' src={headerimg} alt='headerimg' /> */}
                     <div className='aside'>
                         <h1>ShopsavvyAdmin</h1>
-                        <Link href={'https://shopsavvy-store.vercel.app/'} className='visitStore'>visit store</Link>
+                        <Link href={'https://shopsavvy-store.vercel.app/'} target="_blank" rel="noopener noreferrer" className='visitStore'>visit store</Link>
                     </div>
                     
                 </header>
