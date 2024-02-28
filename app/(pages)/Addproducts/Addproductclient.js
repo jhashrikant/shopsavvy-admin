@@ -53,7 +53,7 @@ const Addproductclient = ({ Categories }) => {
         setformdata((prevformdata) => {
             return {
                 ...prevformdata,
-                [event.target.name]: event?.target?.value.trim()
+                [event.target.name]: event?.target?.value
             }
         })
     }
