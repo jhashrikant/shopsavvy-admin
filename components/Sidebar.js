@@ -27,7 +27,7 @@ const Sidebar = ({ Isactive ,OpenAndCloseHamburger}) => {
         <div  className={`leftpanel ${Isactive ? 'active' : ''}`}>
             <div className='mainNavCOntainer'>
                 <header className='header'>
-                    <Image className='headerImg' src={headerimg} alt='headerimg' />
+                    {/* <Image className='headerImg' src={headerimg} alt='headerimg' /> */}
                     <aside className='aside'>
                         <h1>ShopsavvyAdmin</h1>
                         <p className='visitStore'>visit store</p>
