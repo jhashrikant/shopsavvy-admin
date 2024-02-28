@@ -49,7 +49,8 @@ const CategoriesClient = ({ Categories }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	function handleLabelchange(event) {
-		setlabelname(event.target.value)
+		const categoryValue = event?.target?.value.trim()
+		setlabelname(categoryValue)
 	}
 
 
