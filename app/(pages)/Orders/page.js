@@ -1,5 +1,5 @@
 import OrdersClient from "./OrdersClient"
-
+export const revalidate = 0
 const fetchOrders = async () => {
 	try {
 		const response = await fetch(`${process.env.APP_BASE_URL}/api/getOrders`, {

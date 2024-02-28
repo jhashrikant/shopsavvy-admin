@@ -8,7 +8,7 @@ import { useContext } from 'react';
 import { ProductContext } from '@/app/context/ProductContext';
 import { useRouter } from 'next/navigation';
 import { sizes } from '@/utils';
-
+export const revalidate = 0
 
 
 const Addproductclient = ({ Categories }) => {
@@ -16,13 +16,8 @@ const Addproductclient = ({ Categories }) => {
     const router = useRouter()
 
     const context = useContext(ProductContext)
-    console.log(context)
     const { formdata, setformdata, Isediting, setIsediting, productid, setProducts } = context
-    console.log(Isediting)
-    console.log(formdata)
-    //update the setproducts when updated and use this products in our productclient also
 
-    console.log('ppppp',formdata)
 
     const [loading, setLoading] = useState(false);
 
@@ -85,9 +80,7 @@ const Addproductclient = ({ Categories }) => {
                 console.log(data);
                 if (data.response) {
                     toast.success(data.message)
-                    const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`,{
-                        cache: 'no-store'
-                    })
+                    const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`,{ next: { revalidate: 0 } })
                     const JSondata = await updateddata.json();
                     if (JSondata.response) setProducts(JSondata?.products);
                     router.push('/Products')
@@ -128,9 +121,7 @@ const Addproductclient = ({ Categories }) => {
                 console.log(data);
                 if (data.response) {
                     toast.success(data.message)
-                    const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`,{
-                        cache: 'no-store'
-                    })
+                    const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`,{ next: { revalidate: 0 } })
                     const JSondata = await updateddata.json();
                     if (JSondata.response) setProducts(JSondata?.products);
                     router.push('/Products')

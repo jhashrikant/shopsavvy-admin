@@ -89,9 +89,7 @@ const ProductClient = ({ products }) => {
             console.log(data);
             if (data.response) {
                 toast.success(data.message)
-                const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`, {
-                    cache: 'no-store'
-                })
+                const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`,{ next: { revalidate: 0 } })
                 const JSondata = await updateddata.json();
                 if (JSondata.response) setProducts(JSondata?.products);
             }

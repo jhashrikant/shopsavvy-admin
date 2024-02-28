@@ -75,9 +75,7 @@ const CategoriesClient = ({ Categories }) => {
 				console.log(data);
 				if (data.response) {
 					toast.success(data.message)
-					const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, {
-						cache: 'no-store'
-					})
+					const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, { next: { revalidate: 0 } })
 					const JSondata = await updateddata.json()
 					if (JSondata.response) setCategories(JSondata.navItems);
 				} else {
@@ -113,9 +111,7 @@ const CategoriesClient = ({ Categories }) => {
 				}
 				else {
 					toast.success(data.message)
-					const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, {
-						cache: 'no-store'
-					})
+					const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, { next: { revalidate: 0 } })
 					const JSondata = await updateddata.json()
 					if (JSondata.response) setCategories(JSondata.navItems);
 				}
@@ -166,9 +162,7 @@ const CategoriesClient = ({ Categories }) => {
 			console.log(data);
 			if (data.response) {
 				toast.success(data.message)
-				const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, {
-					cache: 'no-store'
-				})
+				const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, { next: { revalidate: 0 } })
 				const JSondata = await updateddata.json();
 				if (JSondata.response) setCategories(JSondata.navItems);
 			}

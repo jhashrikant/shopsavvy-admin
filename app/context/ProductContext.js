@@ -23,9 +23,7 @@ export function ProductProvider({ children }) {
 
 	useEffect(() => {
 		const fetchAllproducts = async () => {
-			const res = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`, {
-				cache: 'no-store'
-			})
+			const res = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`, { next: { revalidate: 0 } })
 			if (!res.ok) {
 				throw new Error(`Failed to fetch products. Status: ${res.status}`);
 			}

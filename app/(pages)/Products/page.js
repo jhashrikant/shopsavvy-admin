@@ -1,5 +1,5 @@
 import ProductClient from "./ProductClient";
-
+export const revalidate = 0
 const fetchAllproducts = async () => {
     const res = await fetch(`${process.env.APP_BASE_URL}/api/getalloriginalProducts`, {
         cache: 'no-store'
