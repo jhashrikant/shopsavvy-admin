@@ -1,7 +1,7 @@
 import connectToMongoDB from "@/Database/MongoDB";
 import { NextResponse } from "next/server";
 import NavItem from "@/Models/NavItemsSchema";
-
+export const dynamic = 'force-dynamic';
 
 export async function POST(request) {
     const body = await request.json();

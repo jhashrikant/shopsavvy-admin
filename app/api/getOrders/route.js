@@ -1,8 +1,9 @@
 import connectToMongoDB from "@/Database/MongoDB"
 import { NextResponse } from "next/server"
 import Order from '@/Models/Order'
+export const dynamic = 'force-dynamic';
 
-export async function GET(request) {
+export async function GET() {
     try {
         await connectToMongoDB();
         const Orders = await Order.find()

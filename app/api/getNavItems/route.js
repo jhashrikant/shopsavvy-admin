@@ -1,8 +1,9 @@
 import connectToMongoDB from "@/Database/MongoDB"
 import NavItem from "@/Models/NavItemsSchema";
 import { NextResponse } from "next/server"
+export const dynamic = 'force-dynamic';
 
-export async function GET(request) {
+export async function GET() {
     try {
         await connectToMongoDB();
         const navitems = await NavItem.find()
