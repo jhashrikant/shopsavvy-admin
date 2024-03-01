@@ -13,9 +13,9 @@ import {
 export const revalidate = 0 
 const OrdersClient = ({ Orders }) => {
 
-
     return (
         <>
+        <h2 className="mt-5 ml-5 mb-5 font-bold text-2xl">Orders({Orders.length})</h2>
             {Orders.length == 0 ? <div>No orders has been placed yet</div> :
                 <Table>
                     <TableCaption>A list of your recent Orders.</TableCaption>
@@ -48,8 +48,6 @@ const OrdersClient = ({ Orders }) => {
                     </TableBody>
                 </Table>}
         </>
-
-     
     )
 }
 export default OrdersClient

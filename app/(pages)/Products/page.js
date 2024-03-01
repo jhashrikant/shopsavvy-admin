@@ -1,7 +1,10 @@
 import ProductClient from "./ProductClient";
 export const revalidate = 0
+
+const apiUrl = process.env.NODE_ENV === 'production' ? process.env.APP_BASE_URL : 'http://localhost:3001';
+
 const fetchAllproducts = async () => {
-    const res = await fetch(`${process.env.APP_BASE_URL}/api/getalloriginalProducts`, {
+    const res = await fetch(`${apiUrl}/api/getalloriginalProducts`, {
         cache: 'no-store'
     })
     if (!res.ok) {

@@ -1,8 +1,10 @@
 import OrdersClient from "./OrdersClient"
 export const revalidate = 0
+const apiUrl = process.env.NODE_ENV === 'production' ? process.env.APP_BASE_URL : 'http://localhost:3001';
+
 const fetchOrders = async () => {
 	try {
-		const response = await fetch(`${process.env.APP_BASE_URL}/api/getOrders`, {
+		const response = await fetch(`${apiUrl}/api/getOrders`, {
 			cache: 'no-store'
 		});
 		if (!response.ok) throw new Error(`Failed to fetch products. Status: ${res.status}`);

@@ -38,6 +38,8 @@ import MyModal from "@/components/ui/headlessui/Dialog"
 
 const CategoriesClient = ({ Categories }) => {
 
+	const apiUrl = process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_APP_BASE_URL : 'http://localhost:3001';
+
 	const [categories, setCategories] = useState(Categories || [])//local state to store the categories so that it renders wheh update or delete happens
 	console.log(categories)
 	const router = useRouter();
@@ -57,74 +59,121 @@ const CategoriesClient = ({ Categories }) => {
 	console.log(process.env)
 
 	const handleaddNewCategory = async () => {
-		if (isUpdating) {
-			try {
-				const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/updateNavItem`, {
-					method: "PATCH",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({ id: Navitemid, labelname: labelname }),
-					cache: 'no-store'
-				});
-				// console.log(res);
-				if (!response.ok) {
-					toast.error("some issue occurred we didn't get response from server")
-					return;
-				}
-				const data = await response.json();
-				console.log(data);
-				if (data.response) {
-					toast.success(data.message)
-					const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, { next: { revalidate: 0 } })
-					const JSondata = await updateddata.json()
-					if (JSondata.response) setCategories(JSondata.navItems);
-				} else {
-					toast.error(data.message)
-				}
-				setisUpdating(false)
-				setlabelname('')
-				setOpen(false)
-				setIsModalOpen(false);
-			} catch (error) {
-				console.error("Error updating NavItem:", error);
-				toast.error("error updating NavItem", error)
-			}
+		if (!labelname) {
+			toast.error("please Enter the category Name")
+			return;
 		}
-		else {
-			try {
-				const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/addNavItems`, {
-					method: "POST", // or 'PUT'
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({ labelname: labelname }),
-					cache: 'no-store'
-				});
-				if (!response.ok) {
-					toast.error("some issue occurred we didn't get response from server")
-					return
-				}
-				const data = await response.json();
-				if (!data.response) {
-					toast.error(data.message)
-					router.reload()
-				}
-				else {
-					toast.success(data.message)
-					const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, { next: { revalidate: 0 } })
-					const JSondata = await updateddata.json()
-					if (JSondata.response) setCategories(JSondata.navItems);
-				}
-				console.log("Success:", data);
-				setlabelname('')
-				setOpen(false)
+		
+		const method = isUpdating ? "PATCH" : "POST"
+		const endpoint = isUpdating ? "updateNavItem" : "addNavItems"
 
-			} catch (error) {
-				console.error("Error:", error);
-				toast.error("some error occured", error)
+		try {
+			const response = await fetch(`${apiUrl}/api/${endpoint}`, {
+				method: method,
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(isUpdating ? { id: Navitemid, labelname: labelname } : { labelname: labelname }),
+				cache: 'no-store'
+			});
+			if (!response.ok) {
+				toast.error("some issue occurred we didn't get response from server")
+				return;
 			}
+			const data = await response.json();
+			console.log(data);
+			if (data.response) {
+				toast.success(data.message)
+				const updateddata = await fetch(`${apiUrl}/api/getNavItems`, { next: { revalidate: 0 } })
+				const JSondata = await updateddata.json();
+				if (JSondata.response) setCategories(JSondata?.navItems);
+			} else {
+				toast.error(data.message)
+			}
+			if (isUpdating) {
+				setIsModalOpen(false);
+				setisUpdating(false)
+			}
+			setlabelname('')
+			setOpen(false)
+		} catch (error) {
+			console.log(error)
+			setisUpdating(false)
+			toast.error(error.message || "An unexpected error occurred. Please try again")
 		}
+
+
+
+
+
+		// if (isUpdating) {
+		// 	try {
+		// 		const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/updateNavItem`, {
+		// 			method: "PATCH",
+		// 			headers: {
+		// 				"Content-Type": "application/json",
+		// 			},
+		// 			body: JSON.stringify({ id: Navitemid, labelname: labelname }),
+		// 			cache: 'no-store'
+		// 		});
+		// 		// console.log(res);
+		// 		if (!response.ok) {
+		// 			toast.error("some issue occurred we didn't get response from server")
+		// 			return;
+		// 		}
+		// 		const data = await response.json();
+		// 		console.log(data);
+		// 		if (data.response) {
+		// 			toast.success(data.message)
+		// 			const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, { next: { revalidate: 0 } })
+		// 			const JSondata = await updateddata.json()
+		// 			if (JSondata.response) setCategories(JSondata.navItems);
+		// 		} else {
+		// 			toast.error(data.message)
+		// 		}
+		// 		setisUpdating(false)
+		// 		setlabelname('')
+		// 		setOpen(false)
+		// 		setIsModalOpen(false);
+		// 	} catch (error) {
+		// 		console.error("Error updating NavItem:", error);
+		// 		toast.error("error updating NavItem", error)
+		// 	}
+		// }
+		// else {
+		// 	try {
+		// 		const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/addNavItems`, {
+		// 			method: "POST", // or 'PUT'
+		// 			headers: {
+		// 				"Content-Type": "application/json",
+		// 			},
+		// 			body: JSON.stringify({ labelname: labelname }),
+		// 			cache: 'no-store'
+		// 		});
+		// 		if (!response.ok) {
+		// 			toast.error("some issue occurred we didn't get response from server")
+		// 			return
+		// 		}
+		// 		const data = await response.json();
+		// 		if (!data.response) {
+		// 			toast.error(data.message)
+		// 			router.reload()
+		// 		}
+		// 		else {
+		// 			toast.success(data.message)
+		// 			const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, { next: { revalidate: 0 } })
+		// 			const JSondata = await updateddata.json()
+		// 			if (JSondata.response) setCategories(JSondata.navItems);
+		// 		}
+		// 		console.log("Success:", data);
+		// 		setlabelname('')
+		// 		setOpen(false)
+
+		// 	} catch (error) {
+		// 		console.error("Error:", error);
+		// 		toast.error("some error occured", error)
+		// 	}
+		// }
 
 	}
 
@@ -146,7 +195,7 @@ const CategoriesClient = ({ Categories }) => {
 	const handleDelete = async (id) => {
 		console.log(id)
 		try {
-			const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/deleteNavItem`, {
+			const response = await fetch(`${apiUrl}/api/deleteNavItem`, {
 				method: "DELETE", // or 'PUT'
 				headers: {
 					"Content-Type": "application/json",
@@ -163,7 +212,7 @@ const CategoriesClient = ({ Categories }) => {
 			console.log(data);
 			if (data.response) {
 				toast.success(data.message)
-				const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, { next: { revalidate: 0 } })
+				const updateddata = await fetch(`${apiUrl}/api/getNavItems`, { next: { revalidate: 0 } })
 				const JSondata = await updateddata.json();
 				if (JSondata.response) setCategories(JSondata.navItems);
 			}
@@ -180,7 +229,7 @@ const CategoriesClient = ({ Categories }) => {
 	return (
 		<>
 			<div className="pl-10 pr-10 pt-5 pb-5 flex justify-between items-center">
-				<h2 className="font-bold text-2xl">Categories</h2>
+				<h2 className="font-bold text-2xl">Categories({categories.length})</h2>
 				<MyModal handlekeypress={handlekeypress} labelname={labelname} handleLabelchange={handleLabelchange} handleaddNewCategory={handleaddNewCategory} />
 			</div>
 

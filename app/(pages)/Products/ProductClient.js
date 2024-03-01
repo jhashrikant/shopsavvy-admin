@@ -37,7 +37,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 const ProductClient = ({ products }) => {
 
-    // const [Products, setProducts] = useState(products || [])
+    const apiUrl = process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_APP_BASE_URL : 'http://localhost:3001';
 
     const router = useRouter()
 
@@ -63,16 +63,12 @@ const ProductClient = ({ products }) => {
             description: description,
         })
         router.push('/Addproducts');
-        // router.push({
-        //     pathname: '/Addproducts',
-        //     query: { productData: JSON.stringify(formdata) }
-        // });
     }
 
     const handleDelete = async (id) => {
         console.log(id)
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/deleteProduct`, {
+            const response = await fetch(`${apiUrl}/api/deleteProduct`, {
                 method: "DELETE", // or 'PUT'
                 headers: {
                     "Content-Type": "application/json",
@@ -89,7 +85,7 @@ const ProductClient = ({ products }) => {
             console.log(data);
             if (data.response) {
                 toast.success(data.message)
-                const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getalloriginalProducts`,{ next: { revalidate: 0 } })
+                const updateddata = await fetch(`${apiUrl}/api/getalloriginalProducts`, { next: { revalidate: 0 } })
                 const JSondata = await updateddata.json();
                 if (JSondata.response) setProducts(JSondata?.products);
             }
@@ -104,6 +100,7 @@ const ProductClient = ({ products }) => {
 
     return (
         <>
+            <h2 className="mt-5 ml-5 mb-5 font-bold text-2xl">Products({Products.length})</h2>
             <Table>
                 <TableCaption>A list of your recent Products.</TableCaption>
                 <TableHeader>
@@ -120,7 +117,6 @@ const ProductClient = ({ products }) => {
                 </TableHeader>
 
                 <TableBody>
-
                     {Products && Products?.map((product, index) => (
                         <TableRow key={index}>
                             <TableCell className="font-medium">{product.Product_name}</TableCell>

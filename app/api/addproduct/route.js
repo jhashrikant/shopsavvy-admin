@@ -14,6 +14,6 @@ export async function POST(request) {
 
     } catch (error) {
         console.error(error);
-        return NextResponse.json({ error: 'cannot add product', error, response: false })
+        return NextResponse.json({ message: 'cannot add product ,some error occured', error, response: false })
     }
 }
