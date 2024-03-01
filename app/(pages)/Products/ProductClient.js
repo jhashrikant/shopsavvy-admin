@@ -17,20 +17,9 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
 import { MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ProductContext } from "@/app/context/ProductContext";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -69,7 +58,7 @@ const ProductClient = ({ products }) => {
         console.log(id)
         try {
             const response = await fetch(`${apiUrl}/api/deleteProduct`, {
-                method: "DELETE", // or 'PUT'
+                method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -77,8 +66,7 @@ const ProductClient = ({ products }) => {
                 cache: 'no-store'
             });
             if (!response.ok) {
-                console.log('sdsds')
-                toast.error("some error occured we didnt get the response")
+                toast.error("some issue occurred we didn't get response from server")
                 return;
             }
             const data = await response.json();
@@ -87,14 +75,14 @@ const ProductClient = ({ products }) => {
                 toast.success(data.message)
                 const updateddata = await fetch(`${apiUrl}/api/getalloriginalProducts`, { next: { revalidate: 0 } })
                 const JSondata = await updateddata.json();
-                if (JSondata.response) setProducts(JSondata?.products);
+                if (JSondata?.response) setProducts(JSondata?.products);
             }
             else {
                 toast.error(data.message)
             }
         } catch (error) {
             console.error("Some Error occured:", error);
-            toast.error(error)
+            toast.error(error.message || "An unexpected error occurred. Please try again")
         }
     }
 

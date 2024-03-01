@@ -18,7 +18,6 @@ const WrapperComponent = ({ children }) => {
 
     const toggleMenu = () => {
         // e.stopPropagation()
-        console.log('sss')
         setOpenmenu(prevmenu => !prevmenu);
     };
     return (

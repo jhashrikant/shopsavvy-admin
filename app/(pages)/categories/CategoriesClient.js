@@ -55,9 +55,6 @@ const CategoriesClient = ({ Categories }) => {
 		setlabelname(categoryValue)
 	}
 
-
-	console.log(process.env)
-
 	const handleaddNewCategory = async () => {
 		if (!labelname) {
 			toast.error("please Enter the category Name")
@@ -81,7 +78,6 @@ const CategoriesClient = ({ Categories }) => {
 				return;
 			}
 			const data = await response.json();
-			console.log(data);
 			if (data.response) {
 				toast.success(data.message)
 				const updateddata = await fetch(`${apiUrl}/api/getNavItems`, { next: { revalidate: 0 } })
@@ -101,86 +97,10 @@ const CategoriesClient = ({ Categories }) => {
 			setisUpdating(false)
 			toast.error(error.message || "An unexpected error occurred. Please try again")
 		}
-
-
-
-
-
-		// if (isUpdating) {
-		// 	try {
-		// 		const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/updateNavItem`, {
-		// 			method: "PATCH",
-		// 			headers: {
-		// 				"Content-Type": "application/json",
-		// 			},
-		// 			body: JSON.stringify({ id: Navitemid, labelname: labelname }),
-		// 			cache: 'no-store'
-		// 		});
-		// 		// console.log(res);
-		// 		if (!response.ok) {
-		// 			toast.error("some issue occurred we didn't get response from server")
-		// 			return;
-		// 		}
-		// 		const data = await response.json();
-		// 		console.log(data);
-		// 		if (data.response) {
-		// 			toast.success(data.message)
-		// 			const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, { next: { revalidate: 0 } })
-		// 			const JSondata = await updateddata.json()
-		// 			if (JSondata.response) setCategories(JSondata.navItems);
-		// 		} else {
-		// 			toast.error(data.message)
-		// 		}
-		// 		setisUpdating(false)
-		// 		setlabelname('')
-		// 		setOpen(false)
-		// 		setIsModalOpen(false);
-		// 	} catch (error) {
-		// 		console.error("Error updating NavItem:", error);
-		// 		toast.error("error updating NavItem", error)
-		// 	}
-		// }
-		// else {
-		// 	try {
-		// 		const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/addNavItems`, {
-		// 			method: "POST", // or 'PUT'
-		// 			headers: {
-		// 				"Content-Type": "application/json",
-		// 			},
-		// 			body: JSON.stringify({ labelname: labelname }),
-		// 			cache: 'no-store'
-		// 		});
-		// 		if (!response.ok) {
-		// 			toast.error("some issue occurred we didn't get response from server")
-		// 			return
-		// 		}
-		// 		const data = await response.json();
-		// 		if (!data.response) {
-		// 			toast.error(data.message)
-		// 			router.reload()
-		// 		}
-		// 		else {
-		// 			toast.success(data.message)
-		// 			const updateddata = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}/api/getNavItems`, { next: { revalidate: 0 } })
-		// 			const JSondata = await updateddata.json()
-		// 			if (JSondata.response) setCategories(JSondata.navItems);
-		// 		}
-		// 		console.log("Success:", data);
-		// 		setlabelname('')
-		// 		setOpen(false)
-
-		// 	} catch (error) {
-		// 		console.error("Error:", error);
-		// 		toast.error("some error occured", error)
-		// 	}
-		// }
-
 	}
 
 	const handleUpdate = async (navitem) => {
 		const { _id, labelname } = navitem
-		console.log(_id)
-		console.log('hello')
 		setisUpdating(true)
 		setNavitemid(_id)
 		setlabelname(labelname)
@@ -196,7 +116,7 @@ const CategoriesClient = ({ Categories }) => {
 		console.log(id)
 		try {
 			const response = await fetch(`${apiUrl}/api/deleteNavItem`, {
-				method: "DELETE", // or 'PUT'
+				method: "DELETE", 
 				headers: {
 					"Content-Type": "application/json",
 				},
@@ -220,10 +140,9 @@ const CategoriesClient = ({ Categories }) => {
 
 		} catch (error) {
 			console.error("Some Error occured:", error);
-			toast.error(error)
+			toast.error(error.message || "An unexpected error occurred. Please try again")
 		}
 	}
-
 
 
 	return (
@@ -277,9 +196,7 @@ const CategoriesClient = ({ Categories }) => {
 												</DialogFooter>
 											</DialogContent>
 
-
 											<DropdownMenuSeparator />
-											{/* <DropdownMenuItem onClick={() => handleUpdate(categorydata._id)} className="cursor-pointer">Update</DropdownMenuItem> */}
 											<DropdownMenuItem onClick={() => handleDelete(categorydata._id)} className="cursor-pointer">Delete</DropdownMenuItem>
 										</DropdownMenuContent>
 									</DropdownMenu>
