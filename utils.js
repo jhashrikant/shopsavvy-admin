@@ -5,6 +5,7 @@ import Delivery from './images/Delivery.png'
 import { ShoppingCart } from 'lucide-react';
 import { LayoutDashboard } from 'lucide-react';
 
+
 const NAV_ITEMS = [
     {
         id: 1,
@@ -64,6 +65,7 @@ const sizes = [
         size: 'XXL'
     },
 ]
+
 
 export { NAV_ITEMS, sizes };
 

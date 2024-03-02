@@ -340,6 +340,7 @@
   .hamburgerIcon {
     display: flex;
     top: 15px;
+    width: 30px;
   }
 
   .rightPanel {

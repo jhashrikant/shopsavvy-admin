@@ -2,24 +2,15 @@
 import { Menu, XCircle } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import {  useRef } from 'react'
+import { useHandleclickOutside } from '@/app/hooks/useHandleclickOutside'
 
-const MainNavbar = ({ openmenu, toggleMenu, Isactive, OpenAndCloseHamburger }) => {
+const MainNavbar = ({ setOpenmenu, openmenu, toggleMenu, Isactive, OpenAndCloseHamburger }) => {
 
-    // const profileref = useRef()
+    const profileref = useRef()
 
-    // useEffect(() => {
-    //     const handleClickOutside = (event) => {
-    //         if (profileref.current && !profileref.current.contains(event?.target)) {
-    //             toggleMenu();
-    //         }
-    //     };
-    //     document.addEventListener('click', handleClickOutside);
-    //     // Remove event listener when the component unmounts
-    //     return () => {
-    //         document.removeEventListener('click', handleClickOutside);
-    //     };
+    useHandleclickOutside(profileref ,setOpenmenu) //call the custom hook at the top to check if we clicked outside of reference
 
-    // }, [profileref])
 
     return (
         <nav className='Nav sm:gap-4 gap-2 sm:px-8 px-4 py-3 border-b border-[#D9D9D9] sticky top-0 bg-[#FFFFFF] z-10 '>
@@ -28,7 +19,7 @@ const MainNavbar = ({ openmenu, toggleMenu, Isactive, OpenAndCloseHamburger }) =
                 <h1 className='font-bold text-xl'>Shopsavvy Admin</h1>
             </div>
 
-            <div  className="dropdown ml-3">
+            <div ref={profileref} className="dropdown ml-3">
                 <button type="button" className="dropdown-toggle flex items-center" onClick={() => toggleMenu()}>
                     <div className="flex-shrink-0 w-10 h-10 relative">
                         <div className="p-1 bg-white rounded-full focus:outline-none focus:ring">
@@ -43,7 +34,7 @@ const MainNavbar = ({ openmenu, toggleMenu, Isactive, OpenAndCloseHamburger }) =
                     </div>
                 </button>
                 {openmenu && (
-                    <ul  className="dropdown-menu absolute top-0 right-0 mt-16 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-10">
+                    <ul className="dropdown-menu absolute top-0 right-0 mt-16 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-10">
                         <li>
                             <Link className='block px-4 py-2 text-gray-800 hover:bg-gray-100' href="/Profile">
                                 Profile

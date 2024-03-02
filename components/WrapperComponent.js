@@ -8,23 +8,20 @@ const WrapperComponent = ({ children }) => {
 
     const [Isactive, setIsActive] = useState(false)
 
-    function OpenAndCloseHamburger() {
-        // e.stopPropagation()
-        console.log('sdsds')
+    const OpenAndCloseHamburger = () => {
         setIsActive((prevState) => !prevState)
     }
 
     const [openmenu, setOpenmenu] = useState(false);
 
     const toggleMenu = () => {
-        // e.stopPropagation()
         setOpenmenu(prevmenu => !prevmenu);
     };
     return (
         <div className='MainContainer'>
-            <Sidebar OpenAndCloseHamburger={OpenAndCloseHamburger} Isactive={Isactive} />
+            <Sidebar setIsActive={setIsActive} OpenAndCloseHamburger={OpenAndCloseHamburger} Isactive={Isactive} />
             <div className='main'>
-                <MainNavbar openmenu={openmenu} toggleMenu={toggleMenu} Isactive={Isactive} OpenAndCloseHamburger={OpenAndCloseHamburger} />
+                <MainNavbar setOpenmenu={setOpenmenu} openmenu={openmenu} toggleMenu={toggleMenu} Isactive={Isactive} OpenAndCloseHamburger={OpenAndCloseHamburger} />
                 {children}
             </div>
         </div>

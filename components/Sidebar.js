@@ -1,44 +1,30 @@
 'use client'
 import Image from 'next/image'
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { NAV_ITEMS } from '../utils'
-import headerimg from '../images/headerimg.png'
 import Link from 'next/link'
+import { useHandleclickOutside } from '@/app/hooks/useHandleclickOutside';
 
-const Sidebar = ({ Isactive ,OpenAndCloseHamburger}) => {
+const Sidebar = ({ setIsActive, Isactive, OpenAndCloseHamburger }) => {
 
-    // const navref = useRef();
+    const navref = useRef();
+    useHandleclickOutside(navref, setIsActive)//call the custom hook at the top to check if we clicked outside of reference
 
-    // useEffect(() => {
-    //     const handleClickOutside = (event) => {
-    //         if (navref.current && !navref.current.contains(event?.target)) {
-    //             OpenAndCloseHamburger();
-    //         }
-    //     };
-    //     document.addEventListener('mousedown', handleClickOutside);
-    //     // Remove event listener when the component unmounts
-    //     return () => {
-    //         document.removeEventListener('mousedown', handleClickOutside);
-    //     };
-
-    // }, [navref])
 
     return (
-        <div  className={`leftpanel ${Isactive ? 'active' : ''}`}>
+        <div className={`leftpanel ${Isactive ? 'active' : ''}`}>
             <div className='mainNavCOntainer'>
                 <header className='header'>
-                    {/* <Image className='headerImg' src={headerimg} alt='headerimg' /> */}
                     <div className='aside'>
                         <h1>ShopsavvyAdmin</h1>
                         <Link href={'https://shopsavvy-store.vercel.app/'} target="_blank" rel="noopener noreferrer" className='visitStore'>visit store</Link>
                     </div>
-                    
                 </header>
 
-                <nav className='navLinks'>
+                <nav ref={navref} className='navLinks'>
                     <ul>
                         {NAV_ITEMS && NAV_ITEMS?.map((navItems) => (
-                            <li key={navItems.id} className='hover:cursor-pointer  space-x-3 '>
+                            <li onClick={() => Isactive ? OpenAndCloseHamburger() : null} key={navItems.id} className='hover:cursor-pointer  space-x-3 '>
                                 <Link className='NavItems' href={navItems.href}>
                                     {React.isValidElement(navItems?.imgPath) ? navItems.imgPath : <Image className='homeImg' src={navItems?.imgPath} alt='homeimg' />}
                                     <h1 className='item '>{navItems?.label}</h1>

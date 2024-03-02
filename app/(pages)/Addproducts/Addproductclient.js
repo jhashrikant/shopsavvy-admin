@@ -22,8 +22,6 @@ const Addproductclient = ({ Categories }) => {
 
    const [loading, setLoading] = useState(false);
 
-   console.log('line 20', formdata)
-
    const handleImageChange = (url) => {
       setformdata((prevformdata) => {
          return {
@@ -48,7 +46,7 @@ const Addproductclient = ({ Categories }) => {
       setformdata((prevformdata) => {
          return {
             ...prevformdata,
-            [event.target.name]: event?.target?.value
+            [event.target.name]: event.target.value
          }
       })
    }
@@ -123,13 +121,13 @@ const Addproductclient = ({ Categories }) => {
                   <div className="sm:col-span-3">
                      <label htmlFor="Product_name" className="block text-sm font-medium leading-6 text-gray-900">Product name</label>
                      <div className="mt-2">
-                        <input value={formdata?.Product_name} onChange={handleformchange} type="text" name="Product_name" id="Product_name" className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                        <input value={formdata?.Product_name} onChange={handleformchange} type="text" name="Product_name" id="Product_name" placeholder='Puma Tshirt Black' className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                      </div>
                   </div>
                   <div className="sm:col-span-3">
                      <label htmlFor="slug" className="block text-sm font-medium leading-6 text-gray-900">Product slug</label>
                      <div className="mt-2">
-                        <input value={formdata?.slug} onChange={handleformchange} type="text" name="slug" id="slug" className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                        <input value={formdata?.slug} onChange={handleformchange} type="text" name="slug" id="slug" placeholder='puma-tshirt-black' className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                      </div>
                   </div>
 
@@ -160,8 +158,8 @@ const Addproductclient = ({ Categories }) => {
                      <label htmlFor="size" className="block mb-2 text-sm font-medium leading-6 text-gray-900">Size</label>
                      <select value={formdata?.size} onChange={handleformchange} name="size" className='select w-full max-w-xs bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500' >
                         <option disabled value=''>Select a Size</option>
-                        {sizes?.map((size) => (
-                           <option name="size" key={size?.id} value={size?.size}>{size?.size}</option>
+                        {sizes?.map((size, index) => (
+                           <option name="size" key={index} value={size.size}>{size.size}</option>
                         ))}
                      </select>
                   </div>
@@ -186,7 +184,6 @@ const Addproductclient = ({ Categories }) => {
 
             <div className="!mb-6 flex items-center justify-end gap-x-6">
                <button onClick={handleCancel} className="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
-               {/* <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button> */}
                <Button type="submit">Save</Button>
             </div>
          </div>
