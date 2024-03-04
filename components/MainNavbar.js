@@ -43,7 +43,6 @@ const MainNavbar = ({ setOpenmenu, openmenu, toggleMenu, Isactive, OpenAndCloseH
                         <li>
                             <Link className='block px-4 py-2 text-gray-800 hover:bg-gray-100' href="/MyOrders">
                                 Settings
-                                {/* <a className="block px-4 py-2 text-gray-800 hover:bg-gray-100">My Orders</a> */}
                             </Link>
                         </li>
                         <li>

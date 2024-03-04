@@ -1,5 +1,5 @@
 "use client"
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export const ProductContext = createContext()
 const apiUrl = process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_APP_BASE_URL : 'http://localhost:3001';
@@ -39,5 +39,9 @@ export function ProductProvider({ children }) {
 			{children}
 		</ProductContext.Provider>
 	)
+}
+
+export const useProductContext = () => {
+	return useContext(ProductContext)
 }
 

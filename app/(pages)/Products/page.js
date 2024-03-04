@@ -19,7 +19,8 @@ const Products = async () => {
     const products = response?.products
 
     return (
-        <ProductClient products={products} />
+        // <ProductClient products={products} />
+        <ProductClient />
     )
 };
 export default Products;

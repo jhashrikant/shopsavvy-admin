@@ -66,6 +66,17 @@ const sizes = [
     },
 ]
 
+//debounced function calls the function after some delay
+const debounce = (callbackfn, delay) => {
+    let timer;
+    return (...args) => {
+        if (timer) clearTimeout(timer)
+        timer = setTimeout(() => {
+            callbackfn(...args)
+        }, delay);
+    }
+}
 
-export { NAV_ITEMS, sizes };
+
+export { NAV_ITEMS, sizes, debounce };
 
