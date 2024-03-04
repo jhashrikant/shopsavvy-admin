@@ -39,13 +39,13 @@ const ProductClient = () => {
 	const [query, setquery] = useState('')
 
 	const fetchproductsByname = async (querysearched) => {
-		if (querysearched === '') {
+		if (querysearched.toLowerCase() === '') {
 			setfilteredProducts([])
 			return;
 		}
 		const filteredProducts = Products.filter((product) => {
 			return (
-				product.Product_name.toLowerCase().includes(querysearched)
+				product.Product_name.toLowerCase().includes(querysearched.toLowerCase())
 			);
 		});
 		setfilteredProducts(filteredProducts);
