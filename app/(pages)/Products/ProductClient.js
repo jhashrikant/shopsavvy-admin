@@ -110,7 +110,7 @@ const ProductClient = () => {
 	return (
 		<>
 			<div className="flex justify-between items-center">
-				<h2 className="mt-5 ml-5 mb-5 font-bold text-2xl">Products({filteredProducts.length !== 0 ? filteredProducts.length : Products.length})</h2>
+				<h2 className="mt-5 ml-5 mb-5 font-bold text-2xl">Products({filteredProducts.length === 0 && query !== '' ? 0 : filteredProducts.length !== 0 ? filteredProducts.length : Products.length})</h2>
 				<Input value={query} onChange={(event) => setquery(event.target.value)} type="text" placeholder="Search Products" />
 			</div>
 			<Table>
