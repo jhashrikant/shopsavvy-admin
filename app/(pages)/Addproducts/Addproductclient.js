@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button"
 import ImageUpload from '@/components/ui/Imageupload';
 import toast, { Toaster } from 'react-hot-toast';
@@ -36,12 +36,26 @@ const Addproductclient = ({ Categories }) => {
       });
    }
 
+   const generateSlug = () => {
+      setformdata((prevfromdata) => {
+         return {
+            ...prevfromdata,
+            slug: prevfromdata.Product_name.trim().toLowerCase().replace(/\s+/g, '-')
+         }
+      })
+   }
+
+
+   useEffect(() => {
+      generateSlug()
+   }, [formdata.Product_name])
+
 
    const handleformchange = (event) => {
       setformdata((prevformdata) => {
          return {
             ...prevformdata,
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
          }
       })
    }
@@ -118,7 +132,7 @@ const Addproductclient = ({ Categories }) => {
                   <div className="sm:col-span-3">
                      <label htmlFor="slug" className="block text-sm font-medium leading-6 text-gray-900">Product slug</label>
                      <div className="mt-2">
-                        <input value={formdata?.slug} onChange={handleformchange} type="text" name="slug" id="slug" placeholder='puma-tshirt-black' className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                        <input value={formdata.slug} readOnly type="text" name="slug" id="slug" placeholder='puma-tshirt-black' className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                      </div>
                   </div>
 
@@ -181,6 +195,7 @@ const Addproductclient = ({ Categories }) => {
          <Toaster />
       </form>
    )
+
 }
 
 export default Addproductclient
