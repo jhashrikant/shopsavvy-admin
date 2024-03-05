@@ -1,7 +1,7 @@
 import connectToMongoDB from "@/Database/MongoDB"
 import Product from "@/Models/Product"
 import { NextResponse } from "next/server"
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 export async function DELETE(request) {
     try {
         await connectToMongoDB()

@@ -4,13 +4,9 @@ import { Button } from "@/components/ui/button"
 import ImageUpload from '@/components/ui/Imageupload';
 import toast, { Toaster } from 'react-hot-toast';
 import { Textarea } from "@/components/ui/textarea"
-import { useContext } from 'react';
-import { ProductContext } from '@/app/context/ProductContext';
 import { useRouter } from 'next/navigation';
 import { sizes } from '@/utils';
-import { debounce } from '@/utils';
-
-export const revalidate = 0
+import { useProductContext } from '@/app/context/ProductContext';
 
 
 const Addproductclient = ({ Categories }) => {
@@ -18,9 +14,7 @@ const Addproductclient = ({ Categories }) => {
    const apiUrl = process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_APP_BASE_URL : 'http://localhost:3001';
    const router = useRouter();
 
-   const context = useContext(ProductContext)
-   const { formdata, setformdata, Isediting, setIsediting, productid, setProducts } = context
-
+   const { formdata, setformdata, Isediting, setIsediting, productid } = useProductContext();
 
    const [loading, setLoading] = useState(false);
 
@@ -42,7 +36,6 @@ const Addproductclient = ({ Categories }) => {
       });
    }
 
-   console.log(formdata)
 
    const handleformchange = (event) => {
       setformdata((prevformdata) => {
@@ -78,7 +71,6 @@ const Addproductclient = ({ Categories }) => {
                "Content-Type": "application/json",
             },
             body: JSON.stringify(Isediting ? { id: productid, formdata: formdata } : formdata),
-            cache: 'no-store'
          })
          if (!res.ok) {
             toast.error("some issue occured we didnt get response from server")
@@ -87,11 +79,9 @@ const Addproductclient = ({ Categories }) => {
          const data = await res.json();
          if (!data.response) toast.error(data.message)
          else {
-            toast.success(data.message)
-            const updateddata = await fetch(`${apiUrl}/api/getalloriginalProducts`, { next: { revalidate: 0 } })
-            const JSondata = await updateddata.json();
-            if (JSondata.response) setProducts(JSondata?.products);
             router.push('/Products')
+            toast.success(data.message)
+            router.refresh()
             setformdata({
                Product_name: '',
                slug: '',
@@ -104,7 +94,6 @@ const Addproductclient = ({ Categories }) => {
             })
             if (Isediting) setIsediting(false)
          }
-
       } catch (error) {
          console.log(error)
          setIsediting(false)

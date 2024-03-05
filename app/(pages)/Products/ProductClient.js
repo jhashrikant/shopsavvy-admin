@@ -26,7 +26,7 @@ import { Input } from "@/components/ui/input"
 import { debounce } from "@/utils";
 
 
-const ProductClient = () => {
+const ProductClient = ({ products }) => {
 
 	const apiUrl = process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_APP_BASE_URL : 'http://localhost:3001';
 
@@ -34,7 +34,7 @@ const ProductClient = () => {
 
 	const [filteredProducts, setfilteredProducts] = useState([])
 
-	const { setformdata, setIsediting, setproductId, Products, setProducts } = useProductContext()
+	const { setformdata, setIsediting, setproductId } = useProductContext()
 
 	const [query, setquery] = useState('')
 
@@ -43,7 +43,7 @@ const ProductClient = () => {
 			setfilteredProducts([])
 			return;
 		}
-		const filteredProducts = Products.filter((product) => {
+		const filteredProducts = products.filter((product) => {
 			return (
 				product.Product_name.toLowerCase().includes(querysearched.toLowerCase())
 			);
@@ -78,7 +78,6 @@ const ProductClient = () => {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({ id: id }),
-				cache: 'no-store'
 			});
 			if (!response.ok) {
 				toast.error("some issue occurred we didn't get response from server")
@@ -87,10 +86,8 @@ const ProductClient = () => {
 			const data = await response.json();
 			console.log(data);
 			if (data.response) {
+				router.refresh()
 				toast.success(data.message)
-				const updateddata = await fetch(`${apiUrl}/api/getalloriginalProducts`, { next: { revalidate: 0 } })
-				const JSondata = await updateddata.json();
-				if (JSondata?.response) setProducts(JSondata?.products);
 			}
 			else {
 				toast.error(data.message)
@@ -110,7 +107,7 @@ const ProductClient = () => {
 	return (
 		<>
 			<div className="flex justify-between items-center">
-				<h2 className="mt-5 ml-5 mb-5 font-bold text-2xl">Products({filteredProducts.length === 0 && query !== '' ? 0 : filteredProducts.length !== 0 ? filteredProducts.length : Products.length})</h2>
+				<h2 className="mt-5 ml-5 mb-5 font-bold text-2xl">Products({filteredProducts.length === 0 && query !== '' ? 0 : filteredProducts.length !== 0 ? filteredProducts.length : products.length})</h2>
 				<Input value={query} onChange={(event) => setquery(event.target.value)} type="text" placeholder="Search Products" />
 			</div>
 			<Table>
@@ -134,7 +131,7 @@ const ProductClient = () => {
 							<TableCell colSpan={8} className="text-center">No results found</TableCell>
 						</TableRow>
 						: filteredProducts.length === 0 ?
-							Products && Products?.map((product, index) => (
+							products && products?.map((product, index) => (
 								<TableRow key={index}>
 									<TableCell className="font-medium">{product.Product_name}</TableCell>
 									<TableCell>{product.description}</TableCell>

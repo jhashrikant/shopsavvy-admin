@@ -1,7 +1,7 @@
 import connectToMongoDB from "@/Database/MongoDB"
 import NavItem from "@/Models/NavItemsSchema";
 import { NextResponse } from "next/server"
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 
 export async function GET() {
     try {

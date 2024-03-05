@@ -10,7 +10,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
-export const revalidate = 0 
+
 const OrdersClient = ({ Orders }) => {
 
     return (

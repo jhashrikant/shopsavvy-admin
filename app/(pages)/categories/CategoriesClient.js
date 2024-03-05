@@ -39,9 +39,7 @@ import MyModal from "@/components/ui/headlessui/Dialog"
 const CategoriesClient = ({ Categories }) => {
 
 	const apiUrl = process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_APP_BASE_URL : 'http://localhost:3001';
-
-	const [categories, setCategories] = useState(Categories || [])//local state to store the categories so that it renders wheh update or delete happens
-	console.log(categories)
+	
 	const router = useRouter();
 
 	const [labelname, setlabelname] = useState('')
@@ -60,7 +58,7 @@ const CategoriesClient = ({ Categories }) => {
 			toast.error("please Enter the category Name")
 			return;
 		}
-		
+
 		const method = isUpdating ? "PATCH" : "POST"
 		const endpoint = isUpdating ? "updateNavItem" : "addNavItems"
 
@@ -71,7 +69,6 @@ const CategoriesClient = ({ Categories }) => {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(isUpdating ? { id: Navitemid, labelname: labelname } : { labelname: labelname }),
-				cache: 'no-store'
 			});
 			if (!response.ok) {
 				toast.error("some issue occurred we didn't get response from server")
@@ -79,13 +76,10 @@ const CategoriesClient = ({ Categories }) => {
 			}
 			const data = await response.json();
 			if (data.response) {
+				router.refresh()
 				toast.success(data.message)
-				const updateddata = await fetch(`${apiUrl}/api/getNavItems`, { next: { revalidate: 0 } })
-				const JSondata = await updateddata.json();
-				if (JSondata.response) setCategories(JSondata?.navItems);
-			} else {
-				toast.error(data.message)
 			}
+			else toast.error(data.message)
 			if (isUpdating) {
 				setIsModalOpen(false);
 				setisUpdating(false)
@@ -116,12 +110,11 @@ const CategoriesClient = ({ Categories }) => {
 		console.log(id)
 		try {
 			const response = await fetch(`${apiUrl}/api/deleteNavItem`, {
-				method: "DELETE", 
+				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({ id: id }),
-				cache: 'no-store'
 			});
 			console.log(response)
 			if (!response.ok) {
@@ -131,10 +124,8 @@ const CategoriesClient = ({ Categories }) => {
 			const data = await response.json();
 			console.log(data);
 			if (data.response) {
+				router.refresh()
 				toast.success(data.message)
-				const updateddata = await fetch(`${apiUrl}/api/getNavItems`, { next: { revalidate: 0 } })
-				const JSondata = await updateddata.json();
-				if (JSondata.response) setCategories(JSondata.navItems);
 			}
 			else toast.error(data.message);
 
@@ -148,7 +139,7 @@ const CategoriesClient = ({ Categories }) => {
 	return (
 		<>
 			<div className="pl-10 pr-10 pt-5 pb-5 flex justify-between items-center">
-				<h2 className="font-bold text-2xl">Categories({categories.length})</h2>
+				<h2 className="font-bold text-2xl">Categories({Categories.length})</h2>
 				<MyModal handlekeypress={handlekeypress} labelname={labelname} handleLabelchange={handleLabelchange} handleaddNewCategory={handleaddNewCategory} />
 			</div>
 
@@ -163,7 +154,7 @@ const CategoriesClient = ({ Categories }) => {
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{categories && categories?.map((categorydata, index) => (
+					{Categories && Categories?.map((categorydata, index) => (
 						<TableRow key={index}>
 							<TableCell className="font-medium">{categorydata?.labelname}</TableCell>
 							<TableCell>{new Date().toDateString()}</TableCell>
