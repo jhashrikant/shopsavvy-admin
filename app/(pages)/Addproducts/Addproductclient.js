@@ -57,7 +57,7 @@ const Addproductclient = ({ Categories }) => {
       const requiredFields = ["Product_name", "slug", "images", "price", "category", "size", "qty", "description"];
       const missingFields = requiredFields?.filter((field) => !formdata[field])
       if (missingFields.length > 0) {
-         toast.error(`Please enter all the valid fields: ${missingfields.join(', ')}`);
+         toast.error(`Please enter all the valid fields: ${missingFields.join(', ')}`);
          return;
       }
 
