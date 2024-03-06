@@ -77,8 +77,5 @@ const debounce = (callbackfn, delay) => {
     }
 }
 
-
-
-
 export { NAV_ITEMS, sizes, debounce };
 

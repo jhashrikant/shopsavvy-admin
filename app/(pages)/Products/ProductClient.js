@@ -70,7 +70,6 @@ const ProductClient = ({ products }) => {
 	}
 
 	const handleDelete = async (id) => {
-		console.log(id)
 		try {
 			const response = await fetch(`${apiUrl}/api/deleteProduct`, {
 				method: "DELETE",
@@ -108,8 +107,9 @@ const ProductClient = ({ products }) => {
 		<>
 			<div className="flex justify-between items-center">
 				<h2 className="mt-5 ml-5 mb-5 font-bold text-2xl">Products({filteredProducts.length === 0 && query !== '' ? 0 : filteredProducts.length !== 0 ? filteredProducts.length : products.length})</h2>
-				<Input value={query} onChange={(event) => setquery(event.target.value)} type="text" placeholder="Search Products" />
+				<Input value={query} onChange={(event) => setquery(event.target.value)} type="text" placeholder="Search by Product name" />
 			</div>
+			{products.length === 0 && <div>No products found</div>}
 			<Table>
 				<TableCaption>A list of your recent Products.</TableCaption>
 				<TableHeader>
@@ -124,7 +124,6 @@ const ProductClient = ({ products }) => {
 						<TableHead className="text-right">Actions</TableHead>
 					</TableRow>
 				</TableHeader>
-
 				<TableBody>
 					{filteredProducts.length === 0 && query !== '' ?
 						<TableRow>
