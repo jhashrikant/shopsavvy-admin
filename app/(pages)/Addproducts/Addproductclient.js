@@ -72,10 +72,9 @@ const Addproductclient = ({ Categories, products }) => {
 		setclosedByselection(false)
 	}
 
-	console.log(Isediting)
+	const debounced = useCallback(debounce(searchProducts, 400),[])
 
 	useEffect(() => {
-		const debounced = debounce(searchProducts, 400)
 		debounced(formdata.Product_name)
 	}, [formdata.Product_name])
 

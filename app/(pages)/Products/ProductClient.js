@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState ,useCallback} from "react";
 import { useProductContext } from "@/app/context/ProductContext";
 import toast, { Toaster } from "react-hot-toast";
 import { Input } from "@/components/ui/input"
@@ -39,6 +39,7 @@ const ProductClient = ({ products }) => {
 	const [query, setquery] = useState('')
 
 	const fetchproductsByname = async (querysearched) => {
+		console.log('hello')
 		if (querysearched.toLowerCase() === '') {
 			setfilteredProducts([])
 			return;
@@ -98,8 +99,9 @@ const ProductClient = ({ products }) => {
 	}
 
 
+	const debouncedfn = useCallback(debounce(fetchproductsByname, 300),[])
+
 	useEffect(() => {
-		const debouncedfn = debounce(fetchproductsByname, 300)
 		debouncedfn(query)
 	}, [query])
 

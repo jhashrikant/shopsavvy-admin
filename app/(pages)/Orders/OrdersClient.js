@@ -10,7 +10,7 @@ import {
 	TableRow,
 } from "@/components/ui/table"
 import { debounce } from "@/utils";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Input } from "@/components/ui/input"
 
 const OrdersClient = ({ Orders }) => {
@@ -31,8 +31,9 @@ const OrdersClient = ({ Orders }) => {
 		setfilteredOrders(filtered)
 	}
 
+	const debouncedfn = useCallback(debounce(searchOrdersByname, 300),[])
+
 	useEffect(() => {
-		const debouncedfn = debounce(searchOrdersByname, 300)
 		debouncedfn(query)
 	}, [query])
 
@@ -40,7 +41,7 @@ const OrdersClient = ({ Orders }) => {
 		<>
 			<div className="flex justify-between items-center">
 				<h2 className="mt-5 ml-5 mb-5 font-bold text-2xl">Orders({filteredOrders.length === 0 && query !== '' ? 0 : filteredOrders.length !== 0 ? filteredOrders.length : Orders.length})</h2>
-				<Input value={query} onChange={(event) => setquery(event.target.value)} type="text" placeholder="Search By Product name" />
+				<Input value={query} onChange={(event) => setquery(event.target.value)} type="text" placeholder="Search Orders By Product name" />
 			</div>
 			{Orders.length == 0 && <div>No orders has been received yet</div>}
 			<Table>
