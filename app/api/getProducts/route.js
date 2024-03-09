@@ -24,15 +24,14 @@ export async function GET() {
                     existingSize.qty += item.qty;
                 } else {
                     // Size doesn't exist, add a new size
-                    tshirts[item.Product_name].size.push({ size: item.size, qty: item.qty });
+                    tshirts[item.Product_name].size.push({ productId: item._id, size: item.size, qty: item.qty });
                 }
             } else {
                 // Product doesn't exist in tshirts, add it with the first size
-                // tshirts[Product_name] = { ...item, size: [{ size, qty }] };
                 tshirts[item.Product_name] = JSON.parse(JSON.stringify(item))
                 delete tshirts[item.Product_name].qty
-                if (item.qty > 0) {  //if more than 1 qty add it as a array of objects
-                    tshirts[item.Product_name].size = [{ size: item.size, qty: item.qty }]
+                if (item.qty > 0) {
+                    tshirts[item.Product_name].size = [{ productId: item._id, size: item.size, qty: item.qty }]
                 }
             }
         }

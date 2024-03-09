@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { Button } from "@/components/ui/button"
 import ImageUpload from '@/components/ui/Imageupload';
 import toast, { Toaster } from 'react-hot-toast';
@@ -16,10 +16,11 @@ const Addproductclient = ({ Categories, products }) => {
 
 	const { formdata, setformdata, Isediting, setIsediting, productid } = useProductContext();
 
+	const closedByselectionRef = useRef(false);
+
 	const [loading, setLoading] = useState(false);
 	const [filteredproducts, setfilteredProducts] = useState([])
 	const [showDropdown, setshowDropdown] = useState(true)
-	const [closedByselection, setclosedByselection] = useState(false)
 
 	const handleImageChange = (url) => {
 		setformdata((prevformdata) => {
@@ -30,7 +31,7 @@ const Addproductclient = ({ Categories, products }) => {
 		});
 	};
 
-	const handleImageRemove =(urlToRemove)=> {
+	const handleImageRemove = (urlToRemove) => {
 		setformdata((prevformdata) => {
 			return {
 				...prevformdata,
@@ -65,14 +66,14 @@ const Addproductclient = ({ Categories, products }) => {
 			)
 		})
 		setfilteredProducts(filtered)
-		if (closedByselection || Isediting) {
+		if (closedByselectionRef.current || Isediting) {
 			setshowDropdown(false)
 		}
 		else setshowDropdown(true)
-		setclosedByselection(false)
+		closedByselectionRef.current = false
 	}
 
-	const debounced = useCallback(debounce(searchProducts, 400),[])
+	const debounced = useCallback(debounce(searchProducts, 400), [])
 
 	useEffect(() => {
 		debounced(formdata.Product_name)
@@ -100,7 +101,7 @@ const Addproductclient = ({ Categories, products }) => {
 			description: selectedProduct?.description
 		})
 		setshowDropdown(false)
-		setclosedByselection(true)
+		closedByselectionRef.current = true;
 	}
 
 	const handleCancel = (event) => {
