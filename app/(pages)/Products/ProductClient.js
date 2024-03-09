@@ -33,6 +33,7 @@ const ProductClient = ({ products }) => {
 	const router = useRouter()
 
 	const [filteredProducts, setfilteredProducts] = useState([])
+	const [isdebounceCompleted, setisdebounceCompleted] = useState(false)
 
 	const { setformdata, setIsediting, setproductId } = useProductContext()
 
@@ -42,6 +43,7 @@ const ProductClient = ({ products }) => {
 		console.log('hello')
 		if (querysearched.toLowerCase() === '') {
 			setfilteredProducts([])
+			setisdebounceCompleted(false)
 			return;
 		}
 		const filteredProducts = products.filter((product) => {
@@ -50,6 +52,7 @@ const ProductClient = ({ products }) => {
 			);
 		});
 		setfilteredProducts(filteredProducts);
+		setisdebounceCompleted(true)
 	}
 
 	const handleUpdate = async (product) => {
@@ -108,7 +111,7 @@ const ProductClient = ({ products }) => {
 	return (
 		<>
 			<div className="flex justify-between items-center">
-				<h2 className="mt-5 ml-5 mb-5 font-bold text-2xl">Products({filteredProducts.length === 0 && query !== '' ? 0 : filteredProducts.length !== 0 ? filteredProducts.length : products.length})</h2>
+				<h2 className="mt-5 ml-5 mb-5 font-bold text-2xl">Products({isdebounceCompleted && filteredProducts.length === 0 && query !== '' ? 0 : filteredProducts.length !== 0 ? filteredProducts.length : products.length})</h2>
 				<Input value={query} onChange={(event) => setquery(event.target.value)} type="text" placeholder="Search by Product name" />
 			</div>
 			{products.length === 0 && <div>No products found</div>}
@@ -127,7 +130,7 @@ const ProductClient = ({ products }) => {
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{filteredProducts.length === 0 && query !== '' ?
+					{isdebounceCompleted && filteredProducts.length === 0 && query !== '' ?
 						<TableRow>
 							<TableCell colSpan={8} className="text-center">No results found</TableCell>
 						</TableRow>

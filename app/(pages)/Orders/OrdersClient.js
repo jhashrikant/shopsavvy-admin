@@ -17,10 +17,12 @@ const OrdersClient = ({ Orders }) => {
 
 	const [query, setquery] = useState('')
 	const [filteredOrders, setfilteredOrders] = useState([])
+	const [isdebounceCompleted, setisdebounceCompleted] = useState(false)
 
 	const searchOrdersByname = (querysearched) => {
 		if (querysearched === '') {
 			setfilteredOrders([])
+			setisdebounceCompleted(false)
 			return;
 		}
 		const filtered = Orders.filter((order) => {
@@ -29,9 +31,14 @@ const OrdersClient = ({ Orders }) => {
 			)
 		})
 		setfilteredOrders(filtered)
+		setisdebounceCompleted(true)
 	}
 
-	const debouncedfn = useCallback(debounce(searchOrdersByname, 300),[])
+	console.log(isdebounceCompleted)
+
+	console.log(filteredOrders)
+
+	const debouncedfn = useCallback(debounce(searchOrdersByname, 300), [])
 
 	useEffect(() => {
 		debouncedfn(query)
@@ -40,7 +47,7 @@ const OrdersClient = ({ Orders }) => {
 	return (
 		<>
 			<div className="flex justify-between items-center">
-				<h2 className="mt-5 ml-5 mb-5 font-bold text-2xl">Orders({filteredOrders.length === 0 && query !== '' ? 0 : filteredOrders.length !== 0 ? filteredOrders.length : Orders.length})</h2>
+				<h2 className="mt-5 ml-5 mb-5 font-bold text-2xl">Orders({isdebounceCompleted && filteredOrders.length === 0 && query !== '' ? 0 : filteredOrders.length !== 0 ? filteredOrders.length : Orders.length})</h2>
 				<Input value={query} onChange={(event) => setquery(event.target.value)} type="text" placeholder="Search Orders By Product name" />
 			</div>
 			{Orders.length == 0 && <div>No orders has been received yet</div>}
@@ -59,7 +66,7 @@ const OrdersClient = ({ Orders }) => {
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{filteredOrders.length === 0 && query !== '' ?
+					{isdebounceCompleted && filteredOrders.length === 0 && query !== '' ?
 						<TableRow>
 							<TableCell colSpan={8} className="text-center">No results could be found</TableCell>
 						</TableRow> :
