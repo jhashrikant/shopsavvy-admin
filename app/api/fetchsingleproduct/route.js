@@ -1,7 +1,7 @@
 import connectToMongoDB from "@/Database/MongoDB";
 import { NextResponse } from "next/server";
 import Product from '@/Models/Product'
-
+export const dynamic = 'force-dynamic';
 export async function GET(request) {
 	try {
 		await connectToMongoDB()
