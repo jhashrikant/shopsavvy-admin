@@ -1,5 +1,8 @@
+import { fetchAllproducts } from "./actions/fetchproducts";
 
-export default function Home() {
+export default async function Home() {
+  const { products } = await fetchAllproducts()
+
   return (
     <main className='mainContent'>
       <section className="text-gray-600 body-font">
@@ -33,7 +36,7 @@ export default function Home() {
                   <path d="M3 18v-6a9 9 0 0118 0v6"></path>
                   <path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"></path>
                 </svg>
-                <h2 className="title-font font-medium text-3xl text-gray-900">8</h2>
+                <h2 className="title-font font-medium text-3xl text-gray-900">{products.length}</h2>
                 <p className="leading-relaxed">Products in stock</p>
               </div>
             </div>

@@ -49,7 +49,6 @@ const Addproductclient = ({ Categories, products }) => {
 		})
 	}
 
-
 	useEffect(() => {
 		generateSlug()
 	}, [formdata?.Product_name])

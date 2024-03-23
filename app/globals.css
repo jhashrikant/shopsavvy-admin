@@ -80,10 +80,8 @@
 .MainContainer {
   display: flex;
   align-items: center;
-  /* flex-direction: column; */
   width: 100vw;
   min-height: 100vh;
-  /* overflow-y: scroll; */
 }
 
 .leftpanel {
@@ -99,7 +97,6 @@
   top: 0;
   right: 0;
   padding: 1rem 0.625rem 1rem 0.625rem;
-  /* padding: 1rem; */
 }
 
 .leftpanel.active {
@@ -107,10 +104,6 @@
   display: flex;
   animation-duration: 0.3s;
   transition-duration: .3s;
-  /* z-index: 1; */
-  /* visibility:visible;
-  opacity: 1;
-  width: 14rem; */
 }
 
 .main {
@@ -315,8 +308,6 @@
 
 .cardContainer {
   display: flex;
-  /* align-items: center;
-  justify-content: space-between; */
   gap: 1.25rem;
   flex-wrap: wrap;
 
@@ -347,7 +338,5 @@
   .rightPanel {
     width: 100%;
   }
-
-  /* when it is less thna 1024 right panel wirll take all widht as now navbar is not there */
 
 }
